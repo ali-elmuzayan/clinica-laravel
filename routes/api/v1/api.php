@@ -1,44 +1,27 @@
-<?php 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\AppointmentController;
-use App\Http\Controllers\Api\V1\PatientController;
+<?php
+
 use App\Http\Controllers\Api\V1\DashboardController;
 use App\Http\Controllers\Api\V1\ExportsController;
-
-
+use App\Http\Controllers\Api\V1\TenantController;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->group(function () {
-    // apointments routes
-    Route::get('/api/appointments', [AppointmentController::class, 'index']);
-    Route::post('/api/appointments', [AppointmentController::class, 'store']);
-    Route::get('/api/appointments/today', [AppointmentController::class, 'today']);
-    Route::get('/api/appointments/{appointment}', [AppointmentController::class, 'show']);
-    Route::put('/api/appointments/{appointment}', [AppointmentController::class, 'update']);
-    Route::delete('/api/appointments/{appointment}', [AppointmentController::class, 'destroy']);
 
-
-    // patients routes
-    Route::get('/api/patients', [PatientController::class, 'index']);
-    Route::post('/api/patients', [PatientController::class, 'store']);
-    Route::get('/api/patients/{patient}', [PatientController::class, 'show']);
-    Route::put('/api/patients/{patient}', [PatientController::class, 'update']);
-    Route::delete('/api/patients/{patient}', [PatientController::class, 'destroy']);
-
-
+    // Get all tenants for admin
+    Route::prefix('tenants')->middleware('role:admin')->group(function () {
+        Route::get('/', [TenantController::class, 'index']);
+        Route::get('/{tenant}', [TenantController::class, 'show']);
+        Route::put('/{tenant}', [TenantController::class, 'update']);
+        Route::delete('/{tenant}', [TenantController::class, 'destroy']);
+    });
 
     // dashboard routes
     Route::get('/api/dashboard', [DashboardController::class, 'index']);
 
-
-    // FILE Operations routes 
+    // FILE Operations routes
     Route::post('/api/exports/appointments/pdf', [ExportsController::class, 'appointmentsPdf']);
     Route::get('/api/exports/:exportId/status', [ExportsController::class, 'exportStatus']);
     Route::get('/api/exports/:exportId/download', [ExportsController::class, 'exportDownload']);
 
-
-    // 
-}); 
-
-
-
-
+    //
+});

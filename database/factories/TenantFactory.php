@@ -18,13 +18,11 @@ class TenantFactory extends Factory
     public function definition(): array
     {
         return [
-            'id' => fake()->uuid(),
-            'name_ar' => fake()->name('ar_SA'),
-            'name_en' => fake()->name('en_US'),
-            'slug' => fake()->slug(),
+            'name_ar' => fake()->name(),
+            'name_en' => fake()->name(),
+            'slug' => fake()->unique()->slug(),
             'subscription_type' => fake()->randomElement(['free_trail', 'basic', 'premium']),
-            // 'subscription_expires_at' => fake()->dateTimeInInterval('+1 month', '+3 months'),
-            'data' => json_encode([]),
+            'subscription_expires_at' => fake()->dateTimeBetween('+1 month', '+3 months'),
         ];
     }
 }
