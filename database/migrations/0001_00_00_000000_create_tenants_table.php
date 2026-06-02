@@ -15,9 +15,11 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name_ar');
             $table->string('name_en'); 
+            $table->string('slug')->unique();
             $table->enum('subscription_type', ['free_trail', 'basic', 'premium']);
             $table->date('subscription_expires_at');
             $table->timestamps();
+            $table->json('data')->nullable();
         });
     }
 

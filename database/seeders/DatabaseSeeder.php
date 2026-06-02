@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Tenant;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -21,5 +22,14 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
         ]);
+
+        $users = User::all(); 
+
+        
+        $users->map(function ($user) {
+            $tenant = Tenant::factory()->create();
+            $user->tenant_id = $tenant->id; 
+            $user->save();
+        });
     }
 }
