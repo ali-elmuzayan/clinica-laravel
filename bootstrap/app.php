@@ -1,12 +1,10 @@
 <?php
 
-use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -20,10 +18,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->web(append: [
-            HandleInertiaRequests::class,
-            AddLinkHeadersForPreloadedAssets::class,
-        ]);
+        // $middleware->web(append: [
+        //     AddLinkHeadersForPreloadedAssets::class,
+        // ]);
 
         // Aliases for middleware
         $middleware->alias([

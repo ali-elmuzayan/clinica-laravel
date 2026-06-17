@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Auth\AuthenticateUserController;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -19,8 +21,8 @@ use Illuminate\Support\Facades\Route;
  * GET /auth/me - Get the authenticated user
  */
 Route::prefix('auth')->group(function () {
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthenticateUserController::class, 'store']);
+    Route::post('/register', [RegisteredUserController::class, 'store']);
 
     // protected routes
     Route::middleware('auth:api')->group(function () {

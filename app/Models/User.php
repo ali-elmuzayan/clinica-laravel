@@ -12,11 +12,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 #[Fillable(['name', 'name_ar', 'email', 'password', 'avatar', 'role', 'tenant_id'])]
 #[Hidden(['password', 'remember_token', 'email_verified_at'])]
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, HasUuids, Notifiable;

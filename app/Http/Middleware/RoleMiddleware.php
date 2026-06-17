@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\Role;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +21,9 @@ class RoleMiddleware
             return response()->json(['message' => 'Unauthenticated'], 401);
         }
 
-        if (! in_array($request->user()->role, $roles)) {
+        $allowedRoles = collect($roles)->map(fn (string $role) => Role::from($role));
+
+        if (! $allowedRoles->contains($request->user()->role)) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
